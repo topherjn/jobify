@@ -16,8 +16,6 @@ if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const port = process.env.PORT || 5100; 
-
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -49,9 +47,6 @@ app.post('/api/v1/jobs', (req, res) => {
   res.status(200).json({ job });
 });
 
-app.listen(port, () => {
-  console.log(`Server running on PORT ${port}`);
-});
 
 //Get a single job 
 app.get('/api/v1/jobs/:id', (req, res) => {
@@ -89,4 +84,18 @@ app.delete('/api/v1/jobs/:id', (req, res) => {
   const newJobs = jobs.filter((job) => job.id !== id);
   jobs = newJobs;
   res.status(200).json({ msg: 'job deleted', job });
+});
+
+app.use('*', (req, res) => {
+  res.status(404).json({ error: 'not found' });
+});
+
+app.use((error, req, res, next) => {
+  console.log(error);
+  res.status(500).json({ error: error.message });
+});
+
+const port = process.env.PORT || 5100; 
+app.listen(port, () => {
+  console.log(`Server running on PORT ${port}`);
 });
