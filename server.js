@@ -1,6 +1,14 @@
 import express from 'express';
 import morgan from 'morgan';
 import * as dotenv from 'dotenv';
+import { nanoid } from 'nanoid';
+
+let jobs = [
+  { id: nanoid(), company: 'apple', position: 'front-end' },
+  { id: nanoid(), company: 'google', position: 'back-end  ' },
+];  
+
+
 
 const app = express();
 
@@ -18,8 +26,6 @@ app.listen(port, () => {
 
 app.use(express.json());
 
-
-
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
@@ -29,5 +35,9 @@ app.post('/', (req, res) => {
 
   res.json({ message: 'Data received', data: req.body });
 }); 
+
+app.get('/api/v1/jobs', (req, res) => {
+  res.status(200).json({ jobs });
+});
 
 
