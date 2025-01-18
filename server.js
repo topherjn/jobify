@@ -53,15 +53,15 @@ app.listen(port, () => {
   console.log(`Server running on PORT ${port}`);
 });
 
-// Get a single job 
-// app.get('/api/v1/jobs/:id', (req, res) => {
-//   const { id } = req.params;
-//   const job = jobs.find((job) => job.id === id);
-//   if (!job) {
-//     return res.status(404).json({ error: 'job not found' });
-//   }
-//   res.status(200).json({ job });
-// });
+//Get a single job 
+app.get('/api/v1/jobs/:id', (req, res) => {
+  const { id } = req.params;
+  const job = jobs.find((job) => job.id === id);
+  if (!job) {
+    return res.status(404).json({ error: 'job not found' });
+  }
+  res.status(200).json({ job });
+});
 
 // edit job
 app.patch('/api/v1/jobs/:id', (req, res) => {
@@ -77,4 +77,16 @@ app.patch('/api/v1/jobs/:id', (req, res) => {
   job.company = company;
   job.position = position;
   res.status(200).json({msg: 'job modified', job});
+});
+
+// delete job
+app.delete('/api/v1/jobs/:id', (req, res) => {
+  const { id } = req.params;
+  const job = jobs.find((job) => job.id === id);
+  if(!job) {
+    return res.status(404).json({ error: 'job not found' });
+  }
+  const newJobs = jobs.filter((job) => job.id !== id);
+  jobs = newJobs;
+  res.status(200).json({ msg: 'job deleted', job });
 });
