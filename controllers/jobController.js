@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import Job from '../models/JobModel.js';
 import { nanoid } from 'nanoid';
 
@@ -10,9 +11,21 @@ export const getAllJobs = async (req, res) => {
     res.status(200).json({ jobs });
 };
 
+// export const createJob = async (req, res) => {  
+//     try {
+//         const { company, position } = req.body;
+//         const job = await Job.create({ company, position });
+//         res.status(200).json({ job });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ error: 'Server error' });
+//     }
+
+// }
+
 export const createJob = async (req, res) => {  
-    const {company, position} = req.body;
-    const job = await Job.create({company, position});
+    const { company, position } = req.body;
+    const job = await Job.create({ company, position });
     res.status(200).json({ job });
 
 }
