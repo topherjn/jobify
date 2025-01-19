@@ -5,11 +5,11 @@ import * as dotenv from 'dotenv';
 // custom imports
 import jobRouter from './routes/jobRouter.js';
 
-app.use('/api/v1/jobs', jobRouter);
-
 const app = express();
 
 dotenv.config();
+
+app.use('/api/v1/jobs', jobRouter);
 
 if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -38,6 +38,14 @@ app.use((error, req, res, next) => {
 });
 
 const port = process.env.PORT || 5100; 
-app.listen(port, () => {
-  console.log(`Server running on PORT ${port}`);
-});
+import mongoose from 'mongoose';
+
+try {
+  await mongoose.connect(process.env.MONGO_URL);
+  app.listen(port, () => {
+    console.log(`server running on PORT ${port}....`);
+  });
+} catch (error) {
+  console.log(error);
+  process.exit(1);
+}
