@@ -6,6 +6,9 @@ import * as dotenv from 'dotenv';
 import jobRouter from './routes/jobRouter.js';
 import mongoose from 'mongoose';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+import { body, validationResult } from 'express-validator';
+import { StatusCodes } from 'http-status-codes';
+
 
 const app = express();
 
@@ -15,7 +18,7 @@ app.use(express.json());
 
 app.use('/api/v1/jobs', jobRouter);
 
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
@@ -23,11 +26,18 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.post('/', (req, res) => {
-  console.log(req);
-
-  res.json({ message: 'Data received', data: req.body });
-}); 
+app.post('/api/v1/test', [body('name')
+  .notEmpty().withMessage('name is required')], 
+  (req, res, next) => { const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error)=>error.msg);
+    return res.status(StatusCodes.NOT_FOUND).json({errors: errorMessages});
+  }
+  next();
+ }, (req, res) => {
+  const { name } = req.body;
+  res.json({ msg: `hello ${name}` });
+});
 
 
 app.use('*', (req, res) => {
@@ -41,7 +51,7 @@ app.use((error, req, res, next) => {
   res.status(500).json({ error: error.message });
 });
 
-const port = process.env.PORT || 5100; 
+const port = process.env.PORT || 5100;
 
 
 try {
