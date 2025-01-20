@@ -22,7 +22,9 @@ export const getAllJobs = async (req, res) => {
 // R - GET JOB
 export const getJob = async (req, res) => {
     req.body.createdBy= req.user.userId;
+    console.log(req.params.id);
     const job = await Job.findById(req.params.id);
+    console.log(job);
     res.status(StatusCodes.OK).json({ job });
 };
 

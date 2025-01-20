@@ -1,10 +1,9 @@
 import { body, param, validationResult } from 'express-validator';
-import { BadRequestError, NotFoundError } from '../errors/customErrors.js';
+import { BadRequestError, NotFoundError, UnauthorizedError } from '../errors/customErrors.js';
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
 import mongoose from 'mongoose';
 import Job from '../models/JobModel.js';
 import User from '../models/UserModel.js';
-import { UnauthenticatedError } from '../errors/customErrors.js';
 
 // once we have this function we can tailor it to specific situations
 // use model schemata as a guide
@@ -15,10 +14,17 @@ const withValidationErrors = (validateValues) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const errorMessages = errors.array().map((error) => error.msg);
+        // console.log(errorMessages);
+
         if (errorMessages[0].startsWith('no job')) {
           throw new NotFoundError(errorMessages);
         }
-        throw new BadRequestError(errorMessages);
+
+        if(errorMessages[0].startsWith('not authorized')) {
+          throw new UnauthorizedError(errorMessages);
+        }
+       
+        throw new BadRequestError(errorMessages);        
       }
       next();
     },
@@ -26,11 +32,15 @@ const withValidationErrors = (validateValues) => {
 };
 
 export const validateIdParam = withValidationErrors([
-  param('id').custom(async (value) => {
-    const isValidId = mongoose.Types.ObjectId.isValid(value);
-    if (!isValidId) throw new BadRequestError('invalid MongoDB id');
+  param('id').custom(async (value, { req }) => {
+    const isValidMongoId = mongoose.Types.ObjectId.isValid(value);
+    if (!isValidMongoId) throw new BadRequestError('invalid MongoDB id');
     const job = await Job.findById(value);
-    if (!job) throw new NotFoundError(`no job with id : ${value}`);
+    if (!job) throw new NotFoundError(`no job with id ${value}`);
+    const isAdmin = req.user.role === 'admin';
+    const isOwner = req.user.userId === job.createdBy.toString();
+    if (!isAdmin && !isOwner)
+      throw new UnauthorizedError('not authorized to access this route');
   }),
 ]);
 
