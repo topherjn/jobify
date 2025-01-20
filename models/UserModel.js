@@ -19,4 +19,15 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+UserSchema.methods.toJSON = function() {
+  return {
+    id: this._id,
+    name: this.name,
+    email: this.email,
+    lastName: this.lastName,
+    location: this.location,
+    role: this.role,
+  };
+};
+
 export default mongoose.model('User', UserSchema);

@@ -3,7 +3,8 @@ import User from '../models/UserModel.js';
 import Job from '../models/JobModel.js';
 
 export const getCurrentUser = async (req, res) => {
-  res.status(StatusCodes.OK).json({ msg: 'get current user' });
+  const user = await User.findOne({_id: req.user.userId});
+  res.status(StatusCodes.OK).json({ user });
 };
 
 export const getApplicationStats = async (req, res) => {
