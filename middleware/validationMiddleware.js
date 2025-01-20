@@ -1,6 +1,9 @@
 import { body, validationResult } from 'express-validator';
 import { BadRequestError } from '../errors/customErrors.js';
+import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
 
+// once we have this function we can tailor it to specific situations
+// use model schemata as a guide
 const withValidationErrors = (validateValues) => {
     return [validateValues,
         (req,res,next) => {
@@ -13,11 +16,12 @@ const withValidationErrors = (validateValues) => {
     ];
 };
 
-export const validateTest = withValidationErrors([
-     body('name')
-    .notEmpty()
-    .withMessage('name is required')
-    .isLength({min:3, max:50})
-    .withMessage('name must be reasonable')
-    .trim(),
-])
+export const validateJobInput = withValidationErrors([
+    body('company').notEmpty().withMessage('company is required'),
+    body('position').notEmpty().withMessage('position is required'),
+    body('jobLocation').notEmpty().withMessage('job location is required'),
+    body('jobStatus')
+      .isIn(Object.values(JOB_STATUS))
+      .withMessage('invalid status value'),
+    body('jobType').isIn(Object.values(JOB_TYPE)).withMessage('invalid job type'),
+  ]);

@@ -8,7 +8,6 @@ import mongoose from 'mongoose';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 import { body, validationResult } from 'express-validator';
 import { StatusCodes } from 'http-status-codes';
-import {validateTest} from './middleware/validationMiddleware.js';
 
 const app = express();
 
@@ -25,15 +24,6 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
-
-app.post('/api/v1/test', 
-  validateTest,
-  (req,res) => {
-    const {name} = req.body;
-    res.json({message: `hello ${name}`});
-  }
-);
-
 
 app.use('*', (req, res) => {
   res.status(404).json({ error: 'not found' });
