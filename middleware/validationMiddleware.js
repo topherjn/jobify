@@ -4,6 +4,7 @@ import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
 import mongoose from 'mongoose';
 import Job from '../models/JobModel.js';
 import User from '../models/UserModel.js';
+import { UnauthenticatedError } from '../errors/customErrors.js';
 
 // once we have this function we can tailor it to specific situations
 // use model schemata as a guide
@@ -63,5 +64,14 @@ export const validateRegisterInput = withValidationErrors([
     .withMessage('password must be at least 8 characters long'),
   body('location').notEmpty().withMessage('location is required'),
   body('lastName').notEmpty().withMessage('last name is required'),
+]);
+
+export const validateLoginInput = withValidationErrors([
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('invalid email format'),
+  body('password').notEmpty().withMessage('password is required'),
 ]);
 
