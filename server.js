@@ -8,13 +8,14 @@ import authRouter from './routes/authRouter.js';
 import mongoose from 'mongoose';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 import { authenticateUser } from './middleware/authMiddleware.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
 dotenv.config();
 
 app.use(express.json());
-
+app.use(cookieParser());
 app.use('/api/v1/jobs', authenticateUser, jobRouter);
 app.use('/api/v1/auth', authRouter);
 
