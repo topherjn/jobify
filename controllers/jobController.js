@@ -1,10 +1,16 @@
 import 'express-async-errors';
 import Job from '../models/JobModel.js';
-import { nanoid } from 'nanoid';
 import { StatusCodes } from 'http-status-codes';
-import { NotFoundError } from '../errors/customErrors.js';
 
+// C - CREATE JOB
+// async errors lib takes care of try catch block
+export const createJob = async (req, res) => {  
+    const { company, position } = req.body;
+    const job = await Job.create({ company, position });
+    res.status(StatusCodes.CREATED).json({ job });
+};
 
+// R - GET ALL JOBS
 // parameter empty on find gets all jobs
 // can get a single job with find({id: id  })   
 export const getAllJobs = async (req, res) => {
@@ -12,34 +18,20 @@ export const getAllJobs = async (req, res) => {
     res.status(StatusCodes.OK).json({ jobs });
 };
 
-
-// async errors lib takes care of try catch block
-export const createJob = async (req, res) => {  
-    const { company, position } = req.body;
-    const job = await Job.create({ company, position });
-    res.status(StatusCodes.CREATED).json({ job });
-}
-
-
+// R - GET JOB
 export const getJob = async (req, res) => {
-    const { id } = req.params;
-    const job = await Job.findById(id);
-    if (!job) throw new NotFoundError(`No job with id : ${id}`);
+    const job = await Job.findById(req.params.id);
     res.status(StatusCodes.OK).json({ job });
 };
 
+// U - UPDATE JOB
 export const updateJob = async (req, res) => {    
-    const { id } = req.params;
-    const updatedJob = await Job.findByIdAndUpdate(id, req.body, { new: true });
-    if(!updateJob)  throw new NotFoundError(`No job with id : ${id}`);
-
+    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.status(StatusCodes.OK).json({msg: 'job modified', updatedJob});
 };
 
+// D - DELETE JOB
 export const deleteJob = async (req, res) => {
-    const { id } = req.params;
-    const removedJob = await Job.findByIdAndDelete(id);
-
-    if(!removedJob) throw new NotFoundError(`No job with id : ${id}`);
+    const removedJob = await Job.findByIdAndDelete(req.params.id);
     res.status(200).json({msg: 'job removed', removedJob});
 };
