@@ -312,7 +312,7 @@ App.jsx
 }
 ```
 
-#### Error Page
+#### Dashboard Error Page
 
 - bubbles up
 
@@ -1896,7 +1896,7 @@ package.json
   id, company, position
 - create routes to handle - create, read, update and delete functionalities
 
-#### Get All Jobs
+#### Get All Jobs Query Setup
 
 [Nanoid](https://www.npmjs.com/package/nanoid)
 
@@ -2195,7 +2195,7 @@ const JobSchema = new mongoose.Schema(
 export default mongoose.model('Job', JobSchema);
 ```
 
-#### Create Job
+#### Create New Job
 
 jobController.js
 
@@ -2278,7 +2278,7 @@ export const getJob = async (req, res) => {
 };
 ```
 
-#### Delete Job
+#### Delete Job Functionality
 
 jobController.js
 
@@ -2682,7 +2682,7 @@ const withValidationErrors = (validateValues) => {
 
 - remove NotFoundError from getJob, updateJob, deleteJob controllers
 
-#### Clean DB
+#### Clean Database Setup
 
 #### User Model
 
@@ -2899,7 +2899,7 @@ const register = async (req, res) => {
 };
 ```
 
-#### Login User
+#### Authenticate Login User
 
 - login user request
 
@@ -3262,7 +3262,7 @@ export const validateIdParam = withValidationErrors([
 ]);
 ```
 
-#### Logout User
+#### Implement User Logout
 
 controllers/authController.js
 
@@ -3336,7 +3336,7 @@ import userRouter from './routers/userRouter.js';
 app.use('/api/v1/users', authenticateUser, userRouter);
 ```
 
-#### Get Current User
+#### Get Current User - Query Setup
 
 ```js
 export const getCurrentUser = async (req, res) => {
