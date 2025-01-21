@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {action as registerAction} from './pages/Register';
 import {
   HomeLayout,
   Landing,
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
       { index: true, element: <Landing /> },
       {
         path: 'register',
-        element: <Register />
+        element: <Register />,
+        action: registerAction,
       },
       {
         path: 'login',
