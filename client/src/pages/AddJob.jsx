@@ -1,4 +1,4 @@
-import { FormRow } from '../components';
+import { FormRow, FormRowSelect } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useOutletContext } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
@@ -17,14 +17,25 @@ const AddJob = () => {
         <h4 className='form-title'>add job</h4>
         <div className='form-center'>
           <FormRow type='text' labelText='Position' name='position' />
-          <FormRow type='text' labelText = 'Company' name='company' />
+          <FormRow type='text' labelText='Company' name='company' />
           <FormRow
             type='text'
             labelText='job location'
             name='jobLocation'
             defaultValue={user.location}
           />
-
+          <FormRowSelect
+            labelText='job status'
+            name='jobStatus'
+            defaultValue={JOB_STATUS.PENDING}
+            list={Object.values(JOB_STATUS)}
+          />
+          <FormRowSelect
+            name='jobType'
+            labelText='job type'
+            defaultValue={JOB_TYPE.FULL_TIME}
+            list={Object.values(JOB_TYPE)}
+          />
           <button
             type='submit'
             className='btn btn-block form-btn '
