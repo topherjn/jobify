@@ -3,17 +3,24 @@ import Wrapper from '../assets/wrappers/Dashboard';
 import { BigSidebar, Navbar, SmallSidebar } from '../components';
 import { createContext, useContext, useState } from 'react';
 import { checkDefaultTheme } from '../App';
+import customFetch from '../utils/customFetch';
 
-export const loader = () => {
-  return 'hello world';
-}
+export const loader = async () => {
+  try {
+    const { data } = await customFetch('/users/current-user');
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return redirect('/');
+  }
+};
 
 const DashboardContext = createContext();
 
 const DashboardLayout = ({isDarkThemeEnabled}) => {
-  const data = useLoaderData();
-  console.log(data);
-  const user = { name: 'John Doe' };
+  const user = useLoaderData();
+  console.log(user);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
 
