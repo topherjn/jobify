@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {action as registerAction} from './pages/Register';
+import {action as loginAction} from './pages/Login';
 import {
   HomeLayout,
   Landing,
@@ -39,7 +40,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
-        element: <Login />
+        element: <Login />,
+        action: loginAction
       },
       {
         path: 'dashboard',
