@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {action as registerAction} from './pages/Register';
 import {action as loginAction} from './pages/Login';
 import {loader as dashboardLoader} from './pages/DashboardLayout';
+import {action as addJobAction} from './pages/AddJob';
 import {
   HomeLayout,
   Landing,
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
         element: <DashboardLayout isDarkThemeEnabled={isDarkThemeEnabled} />,
         loader: dashboardLoader,
         children: [
-          {index: true, element: <AddJob />},
+          {index: true, element: <AddJob />,action:addJobAction,},
           {path: 'stats', element: <Stats />},
           {path: 'all-jobs', element: <AllJobs />},
           {path: 'profile', element: <Profile />},
