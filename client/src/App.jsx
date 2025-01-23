@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import {action as registerAction} from './pages/Register';
-import {action as loginAction} from './pages/Login';
-import {loader as dashboardLoader} from './pages/DashboardLayout';
-import {action as addJobAction} from './pages/AddJob';
-import {loader as allJobsLoader} from './pages/AllJobs';
-import {action as editJobAction, loader as editJobLoader} from './pages/EditJob';
+import { action as registerAction } from './pages/Register';
+import { action as loginAction } from './pages/Login';
+import { loader as dashboardLoader } from './pages/DashboardLayout';
+import { action as addJobAction } from './pages/AddJob';
+import { loader as allJobsLoader } from './pages/AllJobs';
+import { action as editJobAction, loader as editJobLoader } from './pages/EditJob';
+import { action as deleteJobAction } from './pages/DeleteJob';
 import {
   HomeLayout,
   Landing,
@@ -53,17 +54,18 @@ const router = createBrowserRouter([
         element: <DashboardLayout isDarkThemeEnabled={isDarkThemeEnabled} />,
         loader: dashboardLoader,
         children: [
-          {index: true, element: <AddJob />,action:addJobAction,},
-          {path: 'stats', element: <Stats />},
-          {path: 'all-jobs', element: <AllJobs />,loader: allJobsLoader,},
-          {path: 'profile', element: <Profile />},
-          {path: 'admin', element: <Admin />},
+          { index: true, element: <AddJob />, action: addJobAction, },
+          { path: 'stats', element: <Stats /> },
+          { path: 'all-jobs', element: <AllJobs />, loader: allJobsLoader, },
+          { path: 'profile', element: <Profile /> },
+          { path: 'admin', element: <Admin /> },
           {
             path: 'edit-job/:id',
             element: <EditJob />,
             loader: editJobLoader,
             action: editJobAction,
           },
+          { path: 'delete-job/:id', action: deleteJobAction },
         ]
       },
     ]
