@@ -10,13 +10,18 @@ import mongoose from 'mongoose';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 import { authenticateUser } from './middleware/authMiddleware.js';
 import cookieParser from 'cookie-parser';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 const app = express();
 
 dotenv.config();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static(path.resolve(__dirname, './public')));
 
 app.use('/api/v1/users', authenticateUser, userRouter);
 app.use('/api/v1/jobs', authenticateUser, jobRouter);
