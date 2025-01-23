@@ -6,6 +6,7 @@ import { action as addJobAction } from './pages/AddJob';
 import { loader as allJobsLoader } from './pages/AllJobs';
 import { action as editJobAction, loader as editJobLoader } from './pages/EditJob';
 import { action as deleteJobAction } from './pages/DeleteJob';
+import { loader as adminLoader } from './pages/Admin';
 import {
   HomeLayout,
   Landing,
@@ -67,6 +68,11 @@ const router = createBrowserRouter([
           },
           { path: 'delete-job/:id', action: deleteJobAction },
         ]
+      },
+      {
+        path: 'admin',
+        element: <Admin />,
+        loader: adminLoader,
       },
     ]
   },
