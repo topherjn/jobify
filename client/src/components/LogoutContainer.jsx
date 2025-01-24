@@ -31,4 +31,3 @@ const LogoutContainer = () => {
   );
 };
 export default LogoutContainer;
-

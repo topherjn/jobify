@@ -2,14 +2,13 @@ import { Router } from 'express';
 import { authorizePermissions } from '../middleware/authMiddleware.js';
 import upload from '../middleware/multerMiddleware.js';
 import {validateUpdateUserInput} from '../middleware/validationMiddleware.js';
-
-const router = Router();
-
 import {
   getCurrentUser,
   getApplicationStats,
   updateUser,
 } from '../controllers/userController.js';
+
+const router = Router();
 
 router.get('/current-user', getCurrentUser);
 router.patch('/update-user', updateUser);
