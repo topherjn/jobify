@@ -7,14 +7,21 @@ import { useLoaderData } from 'react-router-dom';
 import { useContext, createContext } from 'react';
 
 export const loader = async ({ request }) => {
-  console.log('hello');
   try {
-    const { data } = await customFetch.get('/jobs');
+    const params = Object.fromEntries([
+      ...new URL(request.url).searchParams.entries(),
+    ]);
+
+    const { data } = await customFetch.get('/jobs', {
+      params,
+    });
+
     return {
       data,
+      searchValues: { ...params },
     };
   } catch (error) {
-    toast.error(error?.response?.data?.msg);
+    toast.error(error.response.data.msg);
     return error;
   }
 };
