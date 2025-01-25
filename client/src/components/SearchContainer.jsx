@@ -44,8 +44,6 @@ const SearchContainer = () => {
           <Link to='/dashboard/all-jobs' className='btn form-btn delete-btn'>
             Reset Search Values
           </Link>
-          {/* TEMP!!!! */}
-          <SubmitBtn formBtn />
         </div>
       </Form>
     </Wrapper>
