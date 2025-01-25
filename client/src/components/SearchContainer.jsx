@@ -5,6 +5,8 @@ import { JOB_TYPE, JOB_STATUS, JOB_SORT_BY } from '../../../utils/constants';
 import { useAllJobsContext } from '../pages/AllJobs';
 
 const SearchContainer = () => {
+  const { searchValues } = useAllJobsContext();
+  const { search, jobStatus, jobType, sort } = searchValues;
   const submit = useSubmit();
   return (
     <Wrapper>
@@ -17,27 +19,27 @@ const SearchContainer = () => {
             type='search'
             name="search"
             labelText="Search"
-            defaultValue='a'
+            defaultValue={search}
             onChange={(e) => {submit(e.currentTarget.form)}}
           />
           <FormRowSelect
             labelText='job status'
             name='jobStatus'
             list={['all', ...Object.values(JOB_STATUS)]}
-            defaultValue='all'
+            defaultValue={jobStatus || 'all'}
             onChange={(e) => {submit(e.currentTarget.form)}}
           />
           <FormRowSelect
             labelText='job type'
             name='jobType'
             list={['all', ...Object.values(JOB_TYPE)]}
-            defaultValue='all'
+            defaultValue={jobType || 'all'}
             onChange={(e) => {submit(e.currentTarget.form)}}
           />
           <FormRowSelect
             name='sort'
             list={[...Object.values(JOB_SORT_BY)]}
-            defaultValue='newest'
+            defaultValue={sort || 'newest'}
             onChange={(e) => {submit(e.currentTarget.form)}}
           />
 
