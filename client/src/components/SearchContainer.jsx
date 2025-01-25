@@ -12,7 +12,12 @@ const SearchContainer = () => {
         <div className='form-center'>
           {/* search position */}
 
-          <FormRow type='search' name='search' defaultValue='a' />
+          <FormRow
+            type='search'
+            name="search"
+            labelText="Search"
+            defaultValue='a'
+          />
           <FormRowSelect
             labelText='job status'
             name='jobStatus'
@@ -27,8 +32,8 @@ const SearchContainer = () => {
           />
           <FormRowSelect
             name='sort'
-            defaultValue='newest'
             list={[...Object.values(JOB_SORT_BY)]}
+            defaultValue='newest'
           />
 
           <Link to='/dashboard/all-jobs' className='btn form-btn delete-btn'>
