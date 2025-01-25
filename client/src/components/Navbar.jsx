@@ -24,5 +24,5 @@ const Navbar = () => {
     </Wrapper>
   );
 };
-
 export default Navbar;
+
