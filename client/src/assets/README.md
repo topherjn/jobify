@@ -1,8 +1,8 @@
-# Complete App
+#### Complete App
 
 [Jobify](https://jobify.live/)
 
-## Create React APP
+#### Create React APP
 
 [VITE](https://vitejs.dev/guide/)
 
@@ -10,7 +10,7 @@
 npm create vite@latest projectName -- --template react
 ```
 
-### Vite - Folder and File Structure
+#### Vite - Folder and File Structure
 
 ```sh
 npm i
@@ -20,7 +20,7 @@ npm i
 npm run dev
 ```
 
-- APP running on <http://localhost:5173/>
+- APP running on http://localhost:5173/
 - .jsx extension
 
 #### Remove Boilerplate
@@ -312,7 +312,7 @@ App.jsx
 }
 ```
 
-#### Dashboard Error Page
+#### Error Page
 
 - bubbles up
 
@@ -1896,7 +1896,7 @@ package.json
   id, company, position
 - create routes to handle - create, read, update and delete functionalities
 
-#### Get All Jobs Query Setup
+#### Get All Jobs
 
 [Nanoid](https://www.npmjs.com/package/nanoid)
 
@@ -2195,7 +2195,7 @@ const JobSchema = new mongoose.Schema(
 export default mongoose.model('Job', JobSchema);
 ```
 
-#### Create New Job
+#### Create Job
 
 jobController.js
 
@@ -2278,7 +2278,7 @@ export const getJob = async (req, res) => {
 };
 ```
 
-#### Delete Job Functionality
+#### Delete Job
 
 jobController.js
 
@@ -2682,7 +2682,7 @@ const withValidationErrors = (validateValues) => {
 
 - remove NotFoundError from getJob, updateJob, deleteJob controllers
 
-#### Clean Database Setup
+#### Clean DB
 
 #### User Model
 
@@ -2899,7 +2899,7 @@ const register = async (req, res) => {
 };
 ```
 
-#### Authenticate Login User
+#### Login User
 
 - login user request
 
@@ -3262,7 +3262,7 @@ export const validateIdParam = withValidationErrors([
 ]);
 ```
 
-#### Implement User Logout
+#### Logout User
 
 controllers/authController.js
 
@@ -3336,7 +3336,7 @@ import userRouter from './routers/userRouter.js';
 app.use('/api/v1/users', authenticateUser, userRouter);
 ```
 
-#### Get Current User - Query Setup
+#### Get Current User
 
 ```js
 export const getCurrentUser = async (req, res) => {
@@ -3496,13 +3496,13 @@ fetch('/api/v1/test')
 This code configures a proxy rule for the development server, specifically for requests that start with /api. Let's go through each property:
 
 '/api': This is the path to match. If a request is made to the development server with a path that starts with /api, the proxy rule will be applied.
-target: '<http://localhost:5100/api>': This specifies the target URL where the requests will be redirected. In this case, any request that matches the /api path will be forwarded to <http://localhost:5100/api>.
+target: 'http://localhost:5100/api': This specifies the target URL where the requests will be redirected. In this case, any request that matches the /api path will be forwarded to http://localhost:5100/api.
 
 changeOrigin: true: When set to true, this property changes the origin of the request to match the target URL. This can be useful when working with CORS (Cross-Origin Resource Sharing) restrictions.
 
 rewrite: (path) => path.replace(/^\/api/, ''): This property allows you to modify the path of the request before it is forwarded to the target. In this case, the rewrite function uses a regular expression (/^\/api/) to remove the /api prefix from the path. For example, if a request is made to /api/users, the rewritten path will be /users.
 
-To summarize, these lines of code configure a proxy rule for requests starting with /api on the development server. The requests will be redirected to <http://localhost:5100/api>, with the /api prefix removed from the path.
+To summarize, these lines of code configure a proxy rule for requests starting with /api on the development server. The requests will be redirected to http://localhost:5100/api, with the /api prefix removed from the path.
 
 #### Concurrently
 
@@ -3624,7 +3624,7 @@ App.jsx
 - FormData API
 
 [FormData API - JS Nuggets](https://youtu.be/5-x4OUM-SP8)
-[FormData API - React](https://youtu.be/WrX5RndZIzw)
+[FormData API - React ](https://youtu.be/WrX5RndZIzw)
 
 Register.jsx
 
@@ -4825,7 +4825,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, './public')));
 ```
 
-- <http://localhost:5100/imageName>
+- http://localhost:5100/imageName
 
 #### Profile Page - Initial Setup
 
@@ -5180,7 +5180,7 @@ export const checkForTestUser = (req, res, next) => {
 
 #### Mock Data
 
-[Mockaroo](https://www.mockaroo.com/)
+[Mockaroo ](https://www.mockaroo.com/)
 
 ```json
 {
