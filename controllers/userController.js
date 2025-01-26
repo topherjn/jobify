@@ -1,10 +1,14 @@
 import { StatusCodes } from 'http-status-codes';
 import User from '../models/UserModel.js';
 import Job from '../models/JobModel.js';
+import cloudinary from 'cloudinary';
+import { promises as fs } from 'fs';
+import { availableMemory } from 'process';
 
 export const getCurrentUser = async (req, res) => {
-  const user = await User.findOne({_id: req.user.userId});
-  res.status(StatusCodes.OK).json({ user });
+  const user = await User.findOne({ _id: req.user.userId });
+  const userWithoutPassword = user.toJSON();
+  res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 };
 
 export const getApplicationStats = async (req, res) => {
@@ -14,9 +18,21 @@ export const getApplicationStats = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const obj = {... req.body};
-  delete obj.password;
-  console.log(obj);
-  const updatedUser = await User.findByIdAndUpdate(req.user.userId, req.body);
-  res.status(StatusCodes.OK).json({ msg: 'user updated' });
+  const newUser = { ...req.body };
+  delete newUser.password;
+  if (req.file) {
+    const response = await cloudinary.v2.uploader.upload(req.file.path);
+    await fs.unlink(req.file.path);
+    newUser.avatar = response.secure_url;
+    newUser.avatarPublicId = response.public_id;
+    console.log(response)
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(req.user.userId, newUser);
+
+  if (req.file && updatedUser.avatarPublicId) {
+    await cloudinary.v2.uploader.destroy(updatedUser.avatarPublicId);
+    Console.log('deleted old image');
+  }
+  res.status(StatusCodes.OK).json({ msg: 'update user' });
 };
