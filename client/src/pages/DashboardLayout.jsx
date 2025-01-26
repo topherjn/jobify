@@ -6,11 +6,10 @@ import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 import { checkDefaultTheme } from '../App';
-
 const userQuery = {
   queryKey: ['user'],
   queryFn: async () => {
-    const { data } = await customFetch('/users/current-user');
+    const { data } = await customFetch.get('/users/current-user');
     return data;
   },
 };
@@ -23,18 +22,16 @@ export const loader = (queryClient) => async () => {
   }
 };
 
-
 const DashboardContext = createContext();
 
 const DashboardLayout = ({ queryClient }) => {
   const { user } = useQuery(userQuery).data;
-  console.log(user);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isPageLoading = navigation.state === 'loading';
-
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
+  const [isAuthError, setIsAuthError] = useState(false);
 
   const toggleDarkTheme = () => {
     const newDarkTheme = !isDarkTheme;
@@ -54,6 +51,23 @@ const DashboardLayout = ({ queryClient }) => {
     toast.success('Logging out...');
   };
 
+  customFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error?.response?.status === 401) {
+        setIsAuthError(true);
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  useEffect(() => {
+    if (!isAuthError) return;
+    logoutUser();
+  }, [isAuthError]);
+
   return (
     <DashboardContext.Provider
       value={{
@@ -72,9 +86,7 @@ const DashboardLayout = ({ queryClient }) => {
           <div>
             <Navbar />
             <div className='dashboard-page'>
-              {isPageLoading ?
-                <Loading /> :
-                <Outlet context={{ user }} />}
+              {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
             </div>
           </div>
         </main>
@@ -82,6 +94,5 @@ const DashboardLayout = ({ queryClient }) => {
     </DashboardContext.Provider>
   );
 };
-
 export const useDashboardContext = () => useContext(DashboardContext);
 export default DashboardLayout;

@@ -3,7 +3,6 @@ import { useState } from 'react';
 import BarChart from './BarChart';
 import AreaChart from './AreaChart';
 import Wrapper from '../assets/wrappers/ChartsContainer';
-
 const ChartsContainer = ({ data }) => {
   const [barChart, setBarChart] = useState(true);
 
@@ -17,5 +16,4 @@ const ChartsContainer = ({ data }) => {
     </Wrapper>
   );
 };
-
 export default ChartsContainer;

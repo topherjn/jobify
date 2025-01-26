@@ -1,22 +1,21 @@
-import { UnauthenticatedError, UnauthorizedError } from '../errors/customErrors.js';
-import { verifyJWT } from '../utils/tokenUtils.js';
 import {
+  UnauthenticatedError,
+  UnauthorizedError,
   BadRequestError,
 } from '../errors/customErrors.js';
+import { verifyJWT } from '../utils/tokenUtils.js';
 
-export const authenticateUser = async (req, res, next) => {
+export const authenticateUser = (req, res, next) => {
   const { token } = req.cookies;
-  if (!token) {
-    throw new UnauthenticatedError('authentication invalid');
-  }
+  if (!token) throw new UnauthenticatedError('authentication invalid');
 
   try {
     const { userId, role } = verifyJWT(token);
-    const testUser = userId === '6792dae12ed8a0f89586edf8';
+    const testUser = userId === '64b2c07ccac2efc972ab0eca';
     req.user = { userId, role, testUser };
     next();
   } catch (error) {
-      throw new UnauthenticatedError('authentication invalid');
+    throw new UnauthenticatedError('authentication invalid');
   }
 };
 
@@ -30,8 +29,6 @@ export const authorizePermissions = (...roles) => {
 };
 
 export const checkForTestUser = (req, res, next) => {
-  if (req.user.testUser) {
-    throw new BadRequestError('Demo User. Read Only!');
-  }
+  if (req.user.testUser) throw new BadRequestError('Demo User. Read Only!');
   next();
 };

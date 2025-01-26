@@ -21,15 +21,10 @@ const UserSchema = new mongoose.Schema({
   avatarPublicId: String,
 });
 
-UserSchema.methods.toJSON = function() {
-  return {
-    id: this._id,
-    name: this.name,
-    email: this.email,
-    lastName: this.lastName,
-    location: this.location,
-    role: this.role,
-  };
+UserSchema.methods.toJSON = function () {
+  let obj = this.toObject();
+  delete obj.password;
+  return obj;
 };
 
 export default mongoose.model('User', UserSchema);

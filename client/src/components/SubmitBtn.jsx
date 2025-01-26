@@ -5,10 +5,10 @@ const SubmitBtn = ({ formBtn }) => {
   return (
     <button
       type='submit'
-      className={`btn btn-block ${formBtn && 'form-btn'}`}
+      className={`btn btn-block ${formBtn && 'form-btn'} `}
       disabled={isSubmitting}
     >
-      {isSubmitting ? 'submitting...' : 'submit'}
+      {isSubmitting ? 'submitting' : 'submit'}
     </button>
   );
 };

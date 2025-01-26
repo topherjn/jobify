@@ -31,7 +31,6 @@ export const login = async (req, res) => {
     expires: new Date(Date.now() + oneDay),
     secure: process.env.NODE_ENV === 'production',
   });
-  console.log("Cookie created");
   res.status(StatusCodes.OK).json({ msg: 'user logged in' });
 };
 
