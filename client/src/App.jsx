@@ -11,6 +11,7 @@ import {action as profileAction} from './pages/Profile';
 import {loader as statsLoader} from './pages/Stats';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ErrorElement } from './components';
 import {
   HomeLayout,
   Landing,
