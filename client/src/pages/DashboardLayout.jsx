@@ -10,6 +10,7 @@ export const loader = async () => {
   try {
     const { data } = await customFetch('/users/current-user');
     console.log(data);
+    toast.success(`Welcome to Jobify, ${data.user.name}!`)
     return data;
   } catch (error) {
     console.log(error);
