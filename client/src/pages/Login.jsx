@@ -16,8 +16,7 @@ export const action = async ({ request }) => {
   }
   try {
     await customFetch.post('/auth/login', data);
-    //toast.success('Login successful');
-    sessionStorage.setItem("idempotenceFlag", "true")
+    toast.success('Login successful');
     return redirect('/dashboard');
   } catch (error) {
     // toast.error(error?.response?.data?.msg);
