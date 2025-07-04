@@ -10,6 +10,12 @@ export const loader = async () => {
   try {
     const { data } = await customFetch('/users/current-user');
     console.log(data);
+    // make sure you greet user just once per session
+    const idempotenceFlag = sessionStorage.getItem("idempotenceFlag");
+    if(idempotenceFlag=="true") {
+      toast.success(`Welcome to Jobify, ${data.user.name}!`)
+      sessionStorage.setItem("idempotenceFlag","false");
+    }
     return data;
   } catch (error) {
     console.log(error);
