@@ -7,7 +7,7 @@ const Landing = () => {
   return (
     <Wrapper>
       <nav>
-       <Logo />
+        <Logo />
       </nav>
       <div className='container page'>
         <div className='info'>
@@ -15,10 +15,7 @@ const Landing = () => {
             job <span>tracking</span> app
           </h1>
           <p>
-            I'm baby wayfarers hoodie next level taiyaki brooklyn cliche blue
-            bottle single-origin coffee chia. Aesthetic post-ironic venmo,
-            quinoa lo-fi tote bag adaptogen everyday carry meggings +1 brunch
-            narwhal.
+            Take control of your job search. Our intuitive tracking tool helps you manage every application, from initial submission to final interview. Stay organized, monitor your progress, and never miss an opportunity. Sign up today to streamline your path to your next career.
           </p>
           <Link to='/register' className='btn register-link'>register</Link>
           <Link to='/login' className='btn'>Login / Demo User</Link>
