@@ -10,13 +10,20 @@ export const loader = async () => {
   try {
     const { data } = await customFetch('/users/current-user');
     console.log(data);
+    // see if flag is set
+    const idempotenceFlag = sessionStorage.getItem("idempotenceFlag");
+    if(idempotenceFlag=="true") {
+      // greet user with first name
+      toast.success(`Welcome to Jobify, ${data.user.name}!`)
+      // deactivate flag
+      sessionStorage.setItem("idempotenceFlag","false");
+    }
     return data;
   } catch (error) {
     console.log(error);
     return redirect('/');
   }
 };
-
 const DashboardContext = createContext();
 
 const DashboardLayout = ({ isDarkThemeEnabled }) => {
